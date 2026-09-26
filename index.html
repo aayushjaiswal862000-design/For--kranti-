@@ -1,1 +1,136 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Message For You 💌</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle, #fce4ec 0%, #ede7f6 100%);
+      font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .card-container {
+      width: 90%;
+      max-width: 380px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      border: 2px solid #fff;
+      position: relative;
+    }
+    .header {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    .letter-box {
+      background: #faf8fd;
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 110px;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.5;
+      text-align: left;
+      border: 1px dashed #d1c4e9;
+      position: relative;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: #7e57c2;
+      vertical-align: middle;
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .cat-sticker {
+      font-size: 42px;
+      margin: 14px 0 6px 0;
+      animation: float 2.5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .prompt-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-top: 10px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 14px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #7c4dff, #536dfe);
+      color: white;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(124, 77, 255, 0.35);
+      transition: transform 0.2s, background 0.3s;
+    }
+    .btn:active { transform: scale(0.97); }
+    .status-msg {
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: #7e57c2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card-container">
+    <div class="header">Hi Kranti 💙</div>
+
+    <div class="letter-box">
+      <span id="typewriter"></span><span class="cursor"></span>
+    </div>
+
+    <div class="cat-sticker">🐱💐</div>
+
+    <div class="prompt-text">Can you forgive me? 🥺</div>
+
+    <button class="btn" id="actionBtn" onclick="respond()">I forgive you 🤍</button>
+    <div class="status-msg" id="status">💙 Ayush is right here, waiting...</div>
+  </div>
+
+  <script>
+    const fullText = "I may not have the perfect words, but I know this is true: I'm sorry, and you matter to me.\n\n— Ayush 💙";
+    let index = 0;
+    const speed = 40;
+
+    function typeEffect() {
+      if (index < fullText.length) {
+        const char = fullText.charAt(index);
+        document.getElementById("typewriter").innerHTML += char === '\n' ? '<br/>' : char;
+        index++;
+        setTimeout(typeEffect, speed);
+      }
+    }
+    window.onload = typeEffect;
+
+    function respond() {
+      const btn = document.getElementById("actionBtn");
+      const status = document.getElementById("status");
+      btn.innerText = "Thank you! 💖";
+      btn.style.background = "#4caf50";
+      status.innerText = "💙 You just made his entire day.";
+    }
+  </script>
+</body>
+</html>
