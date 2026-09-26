@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>For Kranti ❤️</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background: #08050d;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient floating red/orange glow hearts */
+    .glow-heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 16px;
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 1;
+      animation: rise 9s linear infinite;
+    }
+    @keyframes rise {
+      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% { transform: translateY(-110vh) scale(1.2) rotate(20deg); opacity: 0; }
+    }
+
+    /* Floating music player bar */
+    .music-bar {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: rgba(247, 107, 28, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 8px 16px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 999;
+      box-shadow: 0 4px 18px rgba(247, 107, 28, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Section container */
+    .page-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* SECTION 1: Intro Header */
+    .intro-tag {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: #f7a456;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    .hero-avatar-ring {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      padding: 5px;
+      background: linear-gradient(135deg, #f76b1c, #ffbb38);
+      box-shadow: 0 0 35px rgba(247, 107, 28, 0.5);
+      margin-bottom: 24px;
+      animation: pulseGlow 3s infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 25px rgba(247, 107, 28, 0.4); }
+      100% { box-shadow: 0 0 45px rgba(255, 187, 56, 0.7); }
+    }
+    .hero-avatar-ring img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .hero-title {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .hero-sub {
+      color: #cfc2df;
+      font-size: 1rem;
+      margin-bottom: 40px;
+    }
+    .scroll-indicator {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #ffd8a8;
+      font-size: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: bob 1.8s infinite ease-in-out;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* SECTION 2: Envelope & Letter */
+    .envelope-box {
+      width: 300px;
+      height: 190px;
+      background: linear-gradient(145deg, #f7551c, #d93d07);
+      border-radius: 16px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 16px 40px rgba(247, 85, 28, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+    .envelope-box:active {
+      transform: scale(0.98);
+    }
+    .envelope-top {
+      position: absolute;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-left: 150px solid transparent;
+      border-right: 150px solid transparent;
+      border-top: 105px solid #bd3000;
+      transform-origin: top;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 3;
+    }
+    .envelope-opened .envelope-top {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+    .envelope-wax {
+      width: 46px;
+      height: 46px;
+      background: radial-gradient(circle, #ffe3c7, #f7a456);
+      border-radius: 50%;
+      position: absolute;
+      top: 80px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+    .envelope-open-text {
+      position: absolute;
+      bottom: 20px;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* Letter Parchment */
+    .letter-parchment {
+      display: none;
+      width: 100%;
+      max-width: 340px;
+      background: #fdfaf3;
+      color: #2b201a;
+      border-radius: 18px;
+      padding: 30px 24px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      animation: paperReveal 0.6s ease-out forwards;
+      border: 1px solid rgba(220, 200, 180, 0.5);
+    }
+    @keyframes paperReveal {
+      from { opacity: 0; transform: translateY(20px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .letter-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.7rem;
+      color: #b3390f;
+      margin-bottom: 16px;
+    }
+    .letter-content {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #3d2d25;
+      margin-bottom: 20px;
+    }
+    .letter-sign {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: #b3390f;
+      font-weight: 700;
+    }
+
+    /* SECTION 3: 3D Illustration / Graphic */
+    .graphic-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      color: #ffe6c7;
+      margin-bottom: 24px;
+    }
+    .illustration-card {
+      width: 280px;
+      height: 320px;
+      border-radius: 24px;
+      background: radial-gradient(circle at center, #231435 0%, #11091e 100%);
+      border: 1px solid rgba(247, 107, 28, 0.3);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 110px;
+    }
+
+    /* SECTION 4: Polaroid Gallery */
+    .polaroid-container {
+      width: 100%;
+      max-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      margin: 20px 0;
+    }
+    .polaroid-frame {
+      width: 290px;
+      background: #ffffff;
+      padding: 16px 16px 24px 16px;
+      border-radius: 8px;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.55);
+      transform: rotate(-1.5deg);
+      transition: transform 0.3s;
+    }
+    .polaroid-frame:nth-child(even) {
+      transform: rotate(2deg);
+    }
+    .polaroid-frame img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .polaroid-caption {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #3b2b2b;
+      margin-top: 14px;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* SECTION 5: Dance & Surprise */
+    .sweet-quote {
+      font-size: 1.7rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin: 18px 0 12px 0;
+    }
+    .btn-surprise {
+      background: linear-gradient(135deg, #f76b1c, #ff9e2c);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 15px 36px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 10px 28px rgba(247, 107, 28, 0.45);
+      margin-top: 24px;
+      transition: transform 0.15s;
+    }
+    .btn-surprise:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts rising throughout scroll -->
+  <div class="glow-heart" style="left: 10%; animation-duration: 8s;">❤️</div>
+  <div class="glow-heart" style="left: 28%; animation-duration: 10s; animation-delay: 2s; font-size: 13px;">🧡</div>
+  <div class="glow-heart" style="left: 55%; animation-duration: 7.5s; animation-delay: 4s;">❤️</div>
+  <div class="glow-heart" style="left: 78%; animation-duration: 11s; animation-delay: 1s; font-size: 14px;">🧡</div>
+  <div class="glow-heart" style="left: 90%; animation-duration: 9s; animation-delay: 3s;">❤️</div>
+
+  <!-- Music Toggle Pill -->
+  <div class="music-bar" id="musicBtn" onclick="toggleAudio()">
+    <span id="musicIcon">▶️</span>
+    <span id="musicText">Music</span>
+  </div>
+  <audio id="bgMusic" loop src="https://assets.mixkit.co/music/preview/mixkit-loving-you-116.mp3"></audio>
+
+  <!-- ================= SECTION 1: HERO INTRO ================= -->
+  <section class="page-section">
+    <div class="intro-tag">READY FOR A LITTLE SURPRISE?</div>
+    <div class="hero-avatar-ring">
+      <img src="photo3.jpg.jpg" alt="Kranti" />
+    </div>
+    <h1 class="hero-title">Hello Kranti ❤️</h1>
+    <p class="hero-sub">Ayush made something for you.</p>
+
+    <div class="scroll-indicator">
+      <span>Scroll Down To See</span>
+      <span>⬇️</span>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 2: ENVELOPE / LETTER ================= -->
+  <section class="page-section">
+    <div class="envelope-box" id="envelopeElement" onclick="openParchment()">
+      <div class="envelope-top"></div>
+      <div class="envelope-wax">💌</div>
+      <div class="envelope-open-text">Tap to open</div>
+    </div>
+
+    <div class="letter-parchment" id="letterElement">
+      <h2 class="letter-title">Dear Kranti ❤️</h2>
+      <p class="letter-content">
+        "If life gives me a thousand chances...<br/>
+        I'll choose you every single time.<br/><br/>
+        Not because you're perfect,<br/>
+        but because everything feels right when you're beside me.<br/><br/>
+        Whatever happened, your smile and your happiness will always come first for me."
+      </p>
+      <div class="letter-sign">— Always yours, Ayush 💙</div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 3: PROPOSAL / FLOWERS ================= -->
+  <section class="page-section">
+    <h2 class="graphic-title">For the one who makes my world beautiful.</h2>
+    <div class="illustration-card">
+      <div style="animation: bob 3s infinite ease-in-out;">💐</div>
+    </div>
+  </section>
+
+  <!-- ================= SECTION 4: POLAROID GALLERY ================= -->
+  <section class="page-section">
+    <div class="intro-tag">OUR FAVORITE MOMENTS</div>
+    <div class="polaroid-container">
+      
+      <!-- Polaroid 1 -->
+      <div class="polaroid-frame">
+        <img src="photo1.jpg.jpg" alt="Memory 1" />
+        <div class="polaroid-caption">01 • My favorite view ❤️</div>
+      </div>
+
+      <!-- Polaroid 2 -->
+      <div class="polaroid-frame">
+        <img src="photo2.jpg.jpg" alt="Memory 2" />
+        <div class="polaroid-caption">02 • Forgive me please? 🥺</div>
+      </div>
+
+      <!-- Polaroid 3 -->
+      <div class="polaroid-frame">
+        <img src="photo3.jpg.jpg" alt="Memory 3" />
+        <div class="polaroid-caption">03 • That gorgeous smile ✨</div>
+      </div>
+
+      <!-- Polaroid 4 -->
+      <div class="polaroid-frame">
+        <img src="photo4.jpg.jpg" alt="Memory 4" />
+        <div class="polaroid-caption">04 • My whole day 🤍</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SECTION 5: FINAL SURPRISE ================= -->
+  <section class="page-section">
+    <div style="font-size: 90px; margin-bottom: 14px;">👩‍❤️‍👨</div>
+    <h2 class="sweet-quote">You're the sweetest part of my life.</h2>
+    <p style="color: #d1c5e2; font-size: 1rem; max-width: 320px;">
+      And I wanted to make sure you know just how special you are to me.
+    </p>
+
+    <button class="btn-surprise" onclick="finalSurprise()">✨ Tap here for a surprise 🧡</button>
+  </section>
+
+  <script>
+    // Audio Player Toggle
+    let isPlaying = false;
+    function toggleAudio() {
+      const audio = document.getElementById("bgMusic");
+      const icon = document.getElementById("musicIcon");
+      if (isPlaying) {
+        audio.pause();
+        icon.innerText = "▶️";
+        isPlaying = false;
+      } else {
+        audio.play().then(() => {
+          icon.innerText = "⏸️";
+          isPlaying = true;
+        }).catch(() => {});
+      }
+    }
+
+    // Auto-start music on first interaction
+    window.addEventListener("touchstart", function startOnce() {
+      if (!isPlaying) toggleAudio();
+      window.removeEventListener("touchstart", startOnce);
+    }, { once: true });
+
+    // Open Parchment Letter
+    function openParchment() {
+      const env = document.getElementById("envelopeElement");
+      const letter = document.getElementById("letterElement");
+      env.classList.add("envelope-opened");
+
+      confetti({
+        particleCount: 40,
+        spread: 60,
+        origin: { y: 0.4 },
+        colors: ['#f76b1c', '#ffbb38', '#ffffff']
+      });
+
+      setTimeout(() => {
+        env.style.display = "none";
+        letter.style.display = "block";
+      }, 500);
+    }
+
+    // Final Celebration Button
+    function finalSurprise() {
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#f76b1c', '#ff2d55', '#ffbb38', '#ffffff']
+      });
+      setTimeout(() => {
+        confetti({
+          particleCount: 80,
+          angle: 60,
+          spread: 70,
+          origin: { x: 0 },
+          colors: ['#f76b1c', '#ff2d55', '#ffffff']
+        });
+        confetti({
+          particleCount: 80,
+          angle: 120,
+          spread: 70,
+          origin: { x: 1 },
+          colors: ['#f76b1c', '#ff2d55', '#ffffff']
+        });
+      }, 350);
+    }
+  </script>
+</body>
+  </html>
+  
