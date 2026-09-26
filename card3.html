@@ -1,3 +1,4 @@
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,7 @@
       position: relative;
     }
 
-    /* Ambient floating red/orange glow hearts */
+    /* Ambient floating glowing hearts */
     .glow-heart {
       position: fixed;
       bottom: -30px;
@@ -34,18 +35,18 @@
       animation: rise 9s linear infinite;
     }
     @keyframes rise {
-      0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0; }
+      0% { transform: translateY(0) scale(0.8); opacity: 0; }
       20% { opacity: 0.6; }
       80% { opacity: 0.6; }
-      100% { transform: translateY(-110vh) scale(1.2) rotate(20deg); opacity: 0; }
+      100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
     }
 
-    /* Floating music player bar */
+    /* Music toggle button */
     .music-bar {
       position: fixed;
       top: 16px;
       right: 16px;
-      background: rgba(247, 107, 28, 0.9);
+      background: rgba(247, 107, 28, 0.95);
       backdrop-filter: blur(8px);
       padding: 8px 16px;
       border-radius: 24px;
@@ -60,7 +61,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Section container */
+    /* Section layout */
     .page-section {
       min-height: 100vh;
       display: flex;
@@ -73,7 +74,7 @@
       z-index: 10;
     }
 
-    /* SECTION 1: Intro Header */
+    /* SECTION 1: Hero */
     .intro-tag {
       font-size: 0.8rem;
       letter-spacing: 2px;
@@ -106,12 +107,11 @@
       font-size: 2.1rem;
       font-weight: 800;
       margin-bottom: 8px;
-      letter-spacing: -0.5px;
     }
     .hero-sub {
       color: #cfc2df;
       font-size: 1rem;
-      margin-bottom: 40px;
+      margin-bottom: 35px;
     }
     .scroll-indicator {
       font-family: 'Playfair Display', serif;
@@ -129,7 +129,7 @@
       50% { transform: translateY(8px); }
     }
 
-    /* SECTION 2: Envelope & Letter */
+    /* SECTION 2: Envelope */
     .envelope-box {
       width: 300px;
       height: 190px;
@@ -142,10 +142,6 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      transition: transform 0.3s;
-    }
-    .envelope-box:active {
-      transform: scale(0.98);
     }
     .envelope-top {
       position: absolute;
@@ -187,7 +183,6 @@
       text-transform: uppercase;
     }
 
-    /* Letter Parchment */
     .letter-parchment {
       display: none;
       width: 100%;
@@ -227,51 +222,47 @@
       font-weight: 700;
     }
 
-    /* SECTION 3: 3D Illustration / Graphic */
-    .graphic-title {
+    /* SECTION 3 & 5: Visual Character Scenes */
+    .scene-title {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       color: #ffe6c7;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
+      max-width: 320px;
     }
-    .illustration-card {
-      width: 280px;
-      height: 320px;
-      border-radius: 24px;
-      background: radial-gradient(circle at center, #231435 0%, #11091e 100%);
-      border: 1px solid rgba(247, 107, 28, 0.3);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 110px;
+    .scene-character {
+      width: 250px;
+      height: 310px;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.7));
+      animation: floatCharacter 3.5s ease-in-out infinite;
+    }
+    @keyframes floatCharacter {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
-    /* SECTION 4: Polaroid Gallery */
-    .polaroid-container {
-      width: 100%;
-      max-width: 320px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 30px;
-      margin: 20px 0;
-    }
-    .polaroid-frame {
+    /* SECTION 4: Interactive Stacked Polaroid Deck */
+    .deck-stage {
+      position: relative;
       width: 290px;
+      height: 380px;
+      margin: 20px auto 10px auto;
+    }
+    .polaroid-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
       background: #ffffff;
-      padding: 16px 16px 24px 16px;
+      padding: 14px 14px 22px 14px;
       border-radius: 8px;
-      box-shadow: 0 16px 36px rgba(0,0,0,0.55);
-      transform: rotate(-1.5deg);
-      transition: transform 0.3s;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.65);
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
     }
-    .polaroid-frame:nth-child(even) {
-      transform: rotate(2deg);
-    }
-    .polaroid-frame img {
+    .polaroid-card img {
       width: 100%;
       height: 270px;
       object-fit: cover;
@@ -281,21 +272,21 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       color: #3b2b2b;
-      margin-top: 14px;
-      font-size: 1.15rem;
+      margin-top: 12px;
+      font-size: 1.05rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
+    }
+    .deck-hint {
+      font-size: 0.85rem;
+      color: #ffd8a8;
+      letter-spacing: 1px;
+      margin-top: 10px;
     }
 
-    /* SECTION 5: Dance & Surprise */
-    .sweet-quote {
-      font-size: 1.7rem;
-      font-weight: 800;
-      line-height: 1.35;
-      margin: 18px 0 12px 0;
-    }
+    /* SECTION 5: Button */
     .btn-surprise {
       background: linear-gradient(135deg, #f76b1c, #ff9e2c);
       color: #fff;
@@ -316,7 +307,7 @@
 </head>
 <body>
 
-  <!-- Floating hearts rising throughout scroll -->
+  <!-- Floating rising hearts -->
   <div class="glow-heart" style="left: 10%; animation-duration: 8s;">❤️</div>
   <div class="glow-heart" style="left: 28%; animation-duration: 10s; animation-delay: 2s; font-size: 13px;">🧡</div>
   <div class="glow-heart" style="left: 55%; animation-duration: 7.5s; animation-delay: 4s;">❤️</div>
@@ -366,50 +357,55 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 3: PROPOSAL / FLOWERS ================= -->
+  <!-- ================= SECTION 3: 3D PROPOSAL COUPLE ================= -->
   <section class="page-section">
-    <h2 class="graphic-title">For the one who makes my world beautiful.</h2>
-    <div class="illustration-card">
-      <div style="animation: bob 3s infinite ease-in-out;">💐</div>
-    </div>
+    <h2 class="scene-title">For the one who makes my world beautiful.</h2>
+    <img src="https://i.ibb.co/374z1qM/couple-propose.png" 
+         onerror="this.onerror=null; this.src='https://assets.stickpng.com/images/580b585b2edbce24c47b2c5d.png';" 
+         alt="Proposal scene" 
+         class="scene-character" />
   </section>
 
-  <!-- ================= SECTION 4: POLAROID GALLERY ================= -->
+  <!-- ================= SECTION 4: INTERACTIVE STACKED POLAROIDS ================= -->
   <section class="page-section">
     <div class="intro-tag">OUR FAVORITE MOMENTS</div>
-    <div class="polaroid-container">
-      
-      <!-- Polaroid 1 -->
-      <div class="polaroid-frame">
-        <img src="photo1.jpg.jpg" alt="Memory 1" />
-        <div class="polaroid-caption">01 • My favorite view ❤️</div>
-      </div>
 
-      <!-- Polaroid 2 -->
-      <div class="polaroid-frame">
-        <img src="photo2.jpg.jpg" alt="Memory 2" />
-        <div class="polaroid-caption">02 • Forgive me please? 🥺</div>
-      </div>
-
-      <!-- Polaroid 3 -->
-      <div class="polaroid-frame">
-        <img src="photo3.jpg.jpg" alt="Memory 3" />
-        <div class="polaroid-caption">03 • That gorgeous smile ✨</div>
-      </div>
-
-      <!-- Polaroid 4 -->
-      <div class="polaroid-frame">
+    <div class="deck-stage" id="polaroidDeck">
+      <!-- Card 4 (Bottom) -->
+      <div class="polaroid-card" style="transform: rotate(-3deg) scale(0.92); z-index: 1;" onclick="cycleCard(this)">
         <img src="photo4.jpg.jpg" alt="Memory 4" />
         <div class="polaroid-caption">04 • My whole day 🤍</div>
       </div>
 
+      <!-- Card 3 -->
+      <div class="polaroid-card" style="transform: rotate(2deg) scale(0.95); z-index: 2;" onclick="cycleCard(this)">
+        <img src="photo3.jpg.jpg" alt="Memory 3" />
+        <div class="polaroid-caption">03 • That gorgeous smile ✨</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="polaroid-card" style="transform: rotate(-2deg) scale(0.98); z-index: 3;" onclick="cycleCard(this)">
+        <img src="photo2.jpg.jpg" alt="Memory 2" />
+        <div class="polaroid-caption">02 • Forgive me please? 🥺</div>
+      </div>
+
+      <!-- Card 1 (Top) -->
+      <div class="polaroid-card" style="transform: rotate(1deg) scale(1); z-index: 4;" onclick="cycleCard(this)">
+        <img src="photo1.jpg.jpg" alt="Memory 1" />
+        <div class="polaroid-caption">01 • My favorite view ❤️</div>
+      </div>
     </div>
+
+    <div class="deck-hint">👆 Tap a photo to reveal the next memory</div>
   </section>
 
-  <!-- ================= SECTION 5: FINAL SURPRISE ================= -->
+  <!-- ================= SECTION 5: 3D SLOW DANCE & SURPRISE ================= -->
   <section class="page-section">
-    <div style="font-size: 90px; margin-bottom: 14px;">👩‍❤️‍👨</div>
-    <h2 class="sweet-quote">You're the sweetest part of my life.</h2>
+    <img src="https://i.ibb.co/YyY2Zkn/couple-dance.png" 
+         onerror="this.onerror=null; this.src='https://assets.stickpng.com/images/580b585b2edbce24c47b2c5c.png';" 
+         alt="Dancing couple" 
+         class="scene-character" />
+    <h2 style="font-size: 1.7rem; font-weight: 800; line-height: 1.35; margin: 18px 0 10px 0;">You're the sweetest part of my life.</h2>
     <p style="color: #d1c5e2; font-size: 1rem; max-width: 320px;">
       And I wanted to make sure you know just how special you are to me.
     </p>
@@ -418,7 +414,7 @@
   </section>
 
   <script>
-    // Audio Player Toggle
+    // Music toggle
     let isPlaying = false;
     function toggleAudio() {
       const audio = document.getElementById("bgMusic");
@@ -435,13 +431,12 @@
       }
     }
 
-    // Auto-start music on first interaction
     window.addEventListener("touchstart", function startOnce() {
       if (!isPlaying) toggleAudio();
       window.removeEventListener("touchstart", startOnce);
     }, { once: true });
 
-    // Open Parchment Letter
+    // Open envelope
     function openParchment() {
       const env = document.getElementById("envelopeElement");
       const letter = document.getElementById("letterElement");
@@ -460,7 +455,27 @@
       }, 500);
     }
 
-    // Final Celebration Button
+    // Polaroid Stack Interaction (Flick to back)
+    let currentZ = 10;
+    function cycleCard(card) {
+      card.style.transform = "translateX(140%) rotate(25deg) scale(0.9)";
+      card.style.opacity = "0";
+
+      confetti({
+        particleCount: 15,
+        spread: 45,
+        origin: { y: 0.6 },
+        colors: ['#f76b1c', '#ffbb38', '#ffffff']
+      });
+
+      setTimeout(() => {
+        card.style.zIndex = "1";
+        card.style.transform = "translateX(0) rotate(-2deg) scale(0.92)";
+        card.style.opacity = "1";
+      }, 400);
+    }
+
+    // Final Celebration
     function finalSurprise() {
       confetti({
         particleCount: 120,
@@ -487,5 +502,4 @@
     }
   </script>
 </body>
-  </html>
-  
+</html>
