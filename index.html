@@ -23,21 +23,43 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow-x: hidden;
+      overflow: hidden;
       position: relative;
     }
 
-    /* Ambient background floating elements */
-    .bg-bubble {
-      position: absolute;
-      opacity: 0.35;
+    /* Ambient floating hearts across every screen */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
-      user-select: none;
-      animation: floatAround 14s infinite ease-in-out;
+      z-index: 1;
+      overflow: hidden;
     }
-    @keyframes floatAround {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-30px) rotate(15deg); }
+    .floating-heart {
+      position: absolute;
+      bottom: -40px;
+      font-size: 20px;
+      opacity: 0.45;
+      animation: floatUp 8s linear infinite;
+    }
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.5;
+      }
+      80% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.1) rotate(25deg);
+        opacity: 0;
+      }
     }
 
     /* Music toggle button */
@@ -45,15 +67,15 @@
       position: fixed;
       top: 18px;
       right: 18px;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       border: 1px solid rgba(0, 0, 0, 0.08);
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       cursor: pointer;
       z-index: 100;
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
@@ -71,6 +93,7 @@
       justify-content: center;
       text-align: center;
       position: relative;
+      z-index: 10;
       animation: fadeIn 0.4s ease-out;
     }
     @keyframes fadeIn {
@@ -113,12 +136,12 @@
       transform: scale(0.96);
     }
 
-    /* Graphic illustrations */
+    /* Sticker images */
     .character-img {
-      width: 140px;
-      height: 140px;
+      width: 135px;
+      height: 135px;
       object-fit: contain;
-      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.08));
+      border-radius: 18px;
     }
     .animated-float {
       animation: gentleBob 2.6s ease-in-out infinite;
@@ -130,8 +153,8 @@
 
     /* Envelope visual */
     .envelope-box {
-      width: 210px;
-      height: 145px;
+      width: 220px;
+      height: 150px;
       background: #f7ca55;
       border-radius: 12px;
       position: relative;
@@ -148,26 +171,26 @@
       top: 0;
       width: 0;
       height: 0;
-      border-left: 105px solid transparent;
-      border-right: 105px solid transparent;
-      border-top: 75px solid #ebb434;
+      border-left: 110px solid transparent;
+      border-right: 110px solid transparent;
+      border-top: 80px solid #ebb434;
       transform-origin: top;
       transition: transform 0.5s;
     }
     .wax-seal {
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
       background: #e53935;
       border-radius: 50%;
       color: #fff;
       font-weight: 800;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
       z-index: 4;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
     }
     .envelope-open .envelope-flap {
       transform: rotateX(180deg);
@@ -232,19 +255,23 @@
 </head>
 <body>
 
-  <!-- Background Floating Stickers -->
-  <div class="bg-bubble" style="top: 12%; left: 8%; font-size: 24px;">💙</div>
-  <div class="bg-bubble" style="top: 25%; right: 10%; font-size: 20px; animation-delay: 2s;">🙏</div>
-  <div class="bg-bubble" style="bottom: 18%; left: 12%; font-size: 22px; animation-delay: 4s;">🥺</div>
-  <div class="bg-bubble" style="bottom: 25%; right: 14%; font-size: 24px; animation-delay: 1s;">💖</div>
+  <!-- Floating Hearts Background -->
+  <div class="hearts-container">
+    <div class="floating-heart" style="left: 10%; animation-duration: 9s; animation-delay: 0s;">💙</div>
+    <div class="floating-heart" style="left: 25%; animation-duration: 7s; animation-delay: 2s; font-size: 16px;">🤍</div>
+    <div class="floating-heart" style="left: 45%; animation-duration: 10s; animation-delay: 4s; font-size: 22px;">💙</div>
+    <div class="floating-heart" style="left: 65%; animation-duration: 8s; animation-delay: 1s;">🤍</div>
+    <div class="floating-heart" style="left: 85%; animation-duration: 11s; animation-delay: 3s; font-size: 18px;">💙</div>
+    <div class="floating-heart" style="left: 92%; animation-duration: 7.5s; animation-delay: 5s;">🤍</div>
+  </div>
 
-  <!-- Music Toggle (Soft romantic melody) -->
+  <!-- Music Toggle -->
   <div class="audio-btn" id="audioToggle" onclick="toggleAudio()">🔇</div>
   <audio id="bgMusic" loop src="https://assets.mixkit.co/music/preview/mixkit-loving-you-116.mp3"></audio>
 
   <!-- SCREEN 1: Intro -->
   <div class="story-card" id="slide1">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbnlydG5wbnJ4dnNpd3kyNWg2NDk1bWtxaG1oZWhvNWlycnhuOXlscyZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/Ww3QfZ5Gu80RG7LBiA/giphy.gif" alt="Teddy" class="character-img animated-float">
+    <img src="https://media.tenor.com/On7kvXhzml4AAAAi/milk-and-mocha-bear-couple.gif" alt="Teddy" class="character-img animated-float">
     <h1 class="main-title">Kranti... I Have Something to Say 🥺</h1>
     <div class="sub-script">I just want a chance to say this properly.</div>
     <button class="btn-primary" onclick="goToSlide(2)">Hear me out 💔</button>
@@ -252,7 +279,7 @@
 
   <!-- SCREEN 2: I Know I Hurt You -->
   <div class="story-card" id="slide2" style="display:none;">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2R4aWcxc2pwb2h2NXhwbzFwN2pxdjV1NWlyeWJtd3Q2ZWhzMDNuaCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/3oz8xAFtqoOUUrsh7W/giphy.gif" alt="Sad Bear" class="character-img animated-float">
+    <img src="https://media.tenor.com/w2YjQ8z08pUAAAAi/bear-cry.gif" alt="Sad Bear" class="character-img animated-float">
     <h2 class="main-title">I Know I Hurt You</h2>
     <div class="sub-script" id="typewriter2"></div>
     <button class="btn-primary" onclick="goToSlide(3)">Next →</button>
@@ -260,7 +287,7 @@
 
   <!-- SCREEN 3: You Mean Everything -->
   <div class="story-card" id="slide3" style="display:none;">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnJqNGFwN2Z0Y3k1N2s0dHFjcHdzNHNjc3pvdmtzNGM5amRhYXA4NiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/TydZAW0CSOSPC/giphy.gif" alt="Crying Bear" class="character-img animated-float">
+    <img src="https://media.tenor.com/V9r1sXW5r9UAAAAi/milk-and-mocha-hug.gif" alt="Crying Bear" class="character-img animated-float">
     <h2 class="main-title">You Mean Everything</h2>
     <div class="sub-script" id="typewriter3"></div>
     <button class="btn-primary" onclick="goToSlide(4)">Next →</button>
@@ -268,7 +295,7 @@
 
   <!-- SCREEN 4: I'm Truly Sorry -->
   <div class="story-card" id="slide4" style="display:none;">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2kxd2V1c3Z0eXVrY255M2o0cjhqdzNseWNvNDYxZHBxM2FndWFvZiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fxU6WfJ8eembFs9CWg/giphy.gif" alt="Apology Bear" class="character-img animated-float">
+    <img src="https://media.tenor.com/kH7p1CjGZ54AAAAi/tkthao219-bubududu.gif" alt="Apology Bear" class="character-img animated-float">
     <h2 class="main-title">I'm Truly Sorry</h2>
     <div class="sub-script" id="typewriter4"></div>
     <button class="btn-primary" onclick="goToSlide(5)">Next →</button>
@@ -296,7 +323,7 @@
         — Ayush 💙
       </div>
     </div>
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjBwd3MwbG5ocGJyZndzNmRkY3VucXhyeHRrbW1oOGV3cmZ3bXNhayZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif" alt="Cat with flowers" style="width: 100px; margin-top: 14px;" class="animated-float">
+    <img src="https://media.tenor.com/nC3d9gHlVj4AAAAi/cat-kitten.gif" alt="Cat with flowers" style="width: 100px; height: 100px; object-fit: contain; margin-top: 14px;" class="animated-float">
     <button class="btn-primary" style="margin-top: 16px;" onclick="goToSlide(7)">Next →</button>
   </div>
 
@@ -318,15 +345,14 @@
   <div class="story-card" id="slide8" style="display:none;">
     <h1 class="main-title" style="font-size: 1.65rem;">You have no idea what this means 💙</h1>
     <div style="font-size: 0.95rem; color: #7c4dff; font-weight: 700; margin-bottom: 12px;">You just made my day 🥹✨</div>
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdjBwd3MwbG5ocGJyZndzNmRkY3VucXhyeHRrbW1oOGV3cmZ3bXNhayZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif" alt="Cat" style="width: 120px;" class="animated-float">
-    <div style="font-size: 0.85rem; color: #8e83a3; margin-top: 6px;">With all my love, from Ayush</div>
-    <p style="font-family: 'Caveat', cursive; font-size: 1.35rem; color: #4e4367; margin-top: 20px; line-height: 1.4;">
-      "Loving someone isn't about never messing up — it's about always coming back." 🙏💙
+    <img src="https://media.tenor.com/gK9q-E0k8gQAAAAi/peach-goma.gif" alt="Happy Hug" style="width: 130px; height: 130px; object-fit: contain;" class="animated-float">
+    <div style="font-size: 0.85rem; color: #8e83a3; margin-top: 8px;">With all my love, from Ayush</div>
+    <p style="font-family: 'Caveat', cursive; font-size: 1.4rem; color: #4e4367; margin-top: 20px; line-height: 1.4;">
+      "Every little moment with you is precious to me. Forever grateful for you. 💙"
     </p>
   </div>
 
   <script>
-    // Navigation router
     function goToSlide(slideNum) {
       for (let i = 1; i <= 8; i++) {
         const slide = document.getElementById("slide" + i);
@@ -339,7 +365,6 @@
       }
     }
 
-    // Typewriter effect function
     function typeText(elementId, text, speed = 40, callback = null) {
       const el = document.getElementById(elementId);
       if (!el) return;
@@ -357,7 +382,6 @@
       typing();
     }
 
-    // Trigger typing effects on respective screens
     function startSlideAnimation(num) {
       if (num === 2) {
         typeText("typewriter2", "I never wanted to be the reason you felt this way. 😔💔");
@@ -366,11 +390,10 @@
       } else if (num === 4) {
         typeText("typewriter4", "I want to make it up to you, Kranti... 🥺💕");
       } else if (num === 6) {
-        typeText("typewriter6", "It wasn't that it didn't matter — it's that I messed up. Let me make it up to you.", 35);
+        typeText("typewriter6", "Whatever happened, you and your happiness will always come first for me. I'm truly sorry.", 35);
       }
     }
 
-    // Envelope unseal action
     function openEnvelope() {
       const env = document.getElementById("envelope");
       env.classList.add("envelope-open");
@@ -379,7 +402,6 @@
       }, 600);
     }
 
-    // Runaway / softening "Not yet" button
     let rejectClicks = 0;
     function notYetAction() {
       rejectClicks++;
@@ -403,16 +425,13 @@
       }
     }
 
-    // Final forgiveness celebration
     function forgiveAction() {
       goToSlide(8);
-      // Confetti burst
       confetti({
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 }
       });
-      // Side confetti cannons
       setTimeout(() => {
         confetti({
           particleCount: 60,
@@ -431,7 +450,6 @@
       }, 300);
     }
 
-    // Audio toggle
     let isPlaying = false;
     function toggleAudio() {
       const audio = document.getElementById("bgMusic");
@@ -450,4 +468,3 @@
   </script>
 </body>
 </html>
-
