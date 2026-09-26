@@ -1,4 +1,74 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Message For You 💌</title>
+  <!-- Confetti script -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle, #fce4ec 0%, #ede7f6 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 16px;
+    }
+    .card-container {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      border: 2px solid #fff;
+    }
+    .header {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 14px;
+    }
+    .letter-box {
+      background: #faf8fd;
+      border-radius: 18px;
+      padding: 16px;
+      min-height: 110px;
+      font-size: 0.95rem;
+      color: #444;
+      line-height: 1.5;
+      text-align: left;
+      border: 1px dashed #d1c4e9;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: #7e57c2;
+      vertical-align: middle;
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .cat-sticker {
+      font-size: 42px;
+      margin: 16px 0 8px 0;
+      animation: float 2.5s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .prompt-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-top: 10px;
     }
     .btn {
       width: 100%;
@@ -60,7 +130,33 @@
       btn.innerText = "Thank you! 💖";
       btn.style.background = "#4caf50";
       status.innerText = "💙 You just made his entire day.";
+
+      // Confetti burst
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.65 }
+      });
+
+      // Heart-color side bursts
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#7c4dff', '#ff4081', '#ffffff']
+        });
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#7c4dff', '#ff4081', '#ffffff']
+        });
+      }, 250);
     }
   </script>
 </body>
 </html>
+
